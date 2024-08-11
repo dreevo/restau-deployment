@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  menu-service:
+    depends_on:
+      - restaurant-postgres
+    image: "menu-service"
+    container_name: "menu-service"
+    ports:
+      - 9001:9001
+      - 8001:8001
+    environment:
+      - BPL_DEBUG_ENABLED=true
+      - BPL_DEBUG_PORT=8001
+      - BPL_JVM_THREAD_COUNT=50
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://restaurant-postgres:5432/restaurantdb_menu
+      - SPRING_PROFILES_ACTIVE=testdata
+
+  restaurant-postgres:
+    image: "postgres:14.10"
+    container_name: "restaurant-postgres"
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    volumes: 
+      - ./postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
