@@ -1,1 +1,2 @@
 CREATE DATABASE restaurantdb_menu;
+CREATE DATABASE restaurantdb_order;
